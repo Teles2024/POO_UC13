@@ -2,22 +2,29 @@
 require __DIR__ . "/../classes/curso.php";
 
 // Inicializa as variáveis
-$titulo = $horas = $dias = $aluno = "";
+$titulo = $hora = $dia = $aluno = "";
 $cursoCriado = false;
 
 // Cadastrando
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $titulo = trim($_POST["titulo"]);
-    $horas = trim($_POST["horas"]);
-    $dias = trim($_POST["dias"]);
+    $hora = trim($_POST["hora"]);
+    $dia = trim($_POST["dia"]);
     $aluno = trim($_POST["aluno"]);
 
     try {
-        $curso = new Curso($titulo, $horas, $dias, $aluno);
-        $cursoCriado = true;
+        $curso = new Curso($titulo, $hora, $dia, $aluno);
+        $cursoCriado = $curso->cadastrar();
+
+    if ($cursoCriado) {
+        echo "<div class='alert alert-success'>Cadastro efetuado com sucesso</div>";
+    } else {
+        echo "<div class='alert alert-danger'>Erro ao cadastrar curso</div>";
+    }
     } catch (Exception $e) {
         echo "<div class='alert alert-danger mt-3'>" . $e->getMessage() . "</div>";
     }
+    
 }
 ?>
 
@@ -32,15 +39,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="col-md-2">
-            <label for="horas" class="form-label">Horas:</label>
-            <input type="number" name="horas" id="horas" class="form-control"
-                   value="<?= htmlspecialchars($horas) ?>">
+            <label for="hora" class="form-label">Horas:</label>
+            <input type="number" name="hora" id="hora" class="form-control"
+                   value="<?= htmlspecialchars($hora) ?>">
         </div>
 
         <div class="col-md-3">
-            <label for="dias" class="form-label">Dias:</label>
-            <input type="number" name="dias" id="dias" class="form-control"
-                   value="<?= htmlspecialchars($dias) ?>">
+            <label for="dia" class="form-label">Dia:</label>
+            <input type="text" name="dia" id="dia" class="form-control"
+                   value="<?= htmlspecialchars($dia) ?>">
         </div>
 
         <div class="col-md-4">
