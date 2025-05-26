@@ -26,7 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
 }
+
+$cursos = Curso::listar();
 ?>
+
+
 
 <h2 class="text-center my-4">Cadastro de Curso</h2>
 
@@ -61,3 +65,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </form>
 </div>
+
+<h3>Lista de Cursos</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Horas</th>
+            <th>Dia</th>
+            <th>Aluno</th>
+        </tr>
+    </thead>
+    <tbody>
+       <?php if ($cursos && count($cursos) > 0): ?>
+            <?php foreach ($cursos as $curso): ?>
+                <tr>
+                    <td><?= htmlspecialchars($curso['titulo']) ?></td>
+                    <td><?= htmlspecialchars($curso['hora']) ?></td>
+                    <td><?= htmlspecialchars($curso['dia']) ?></td>
+                    <td><?= htmlspecialchars($curso['aluno']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="4" class="text-center">Nenhum curso cadastrado.</td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+</table>

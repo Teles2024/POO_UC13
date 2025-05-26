@@ -63,4 +63,19 @@ class curso {
             return false;
         }
     }
+
+    // Método para listar os cursos
+    public static function listar() {
+        // Conexão com o banco de dados
+        $database = new Database();
+        $conn = $database->getConnection();
+ 
+        // Preparar a consulta SQL
+        $query = "SELECT * FROM curso";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+ 
+        // Retornar os resultados
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
